@@ -14,13 +14,15 @@ export default async function Home() {
     "America/New_York",
   );
 
-  // Explicitly type initialBlocks as Record<string, Status>
   const initialBlocks: Record<string, Status> = {};
-  user.availability.forEach(
-    (b: { dayOfWeek: number; utcHour: number; status: Status }) => {
-      initialBlocks[`${b.dayOfWeek}-${b.utcHour}`] = b.status;
-    },
-  );
+
+  if (user?.availability) {
+    user.availability.forEach(
+      (b: { dayOfWeek: number; utcHour: number; status: Status }) => {
+        initialBlocks[`${b.dayOfWeek}-${b.utcHour}`] = b.status;
+      },
+    );
+  }
 
   return (
     <main className="min-h-screen bg-slate-950 p-8 flex flex-col gap-8 max-w-6xl mx-auto">
