@@ -1,8 +1,8 @@
 import { connection } from "next/server";
 import { getOrCreateUser } from "@/app/actions";
 import ScheduleGrid from "@/components/ScheduleGrid";
+import { Status } from "@prisma/client";
 
-// Allow blocking route rendering for async data fetching
 export const instant = false;
 
 export default async function Home() {
@@ -14,9 +14,10 @@ export default async function Home() {
     "America/New_York",
   );
 
-  const initialBlocks: Record<string, string> = {};
+  // Explicitly type initialBlocks as Record<string, Status>
+  const initialBlocks: Record<string, Status> = {};
   user.availability.forEach(
-    (b: { dayOfWeek: number; utcHour: number; status: string }) => {
+    (b: { dayOfWeek: number; utcHour: number; status: Status }) => {
       initialBlocks[`${b.dayOfWeek}-${b.utcHour}`] = b.status;
     },
   );
