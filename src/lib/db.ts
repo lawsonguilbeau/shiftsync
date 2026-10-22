@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
-import { PrismaPg } from "@prisma/adapter-pg-worker";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { Pool } from "pg";
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
@@ -12,8 +13,18 @@ function createPrismaClient(): PrismaClient {
     throw new Error("DATABASE_URL is not set");
   }
 
-  const adapter = new PrismaPg({ connectionString });
-  return new PrismaClient({ adapter });
+  const pool = new Pool({
+    connectionString,
+    ssl: {
+      rejectUnauthorized: false,
+    },
+    max: 1,
+  });
+
+  const adapter = new PrismaPg(pool);
+
+  // Cast as any to bypass internal driver-adapter-utils version skew during build
+  return new PrismaClient({ adapter: adapter as any });
 }
 
 export const db = globalForPrisma.prisma ?? createPrismaClient();
