@@ -15,9 +15,11 @@ export default async function Home() {
   );
 
   const initialBlocks: Record<string, string> = {};
-  user.availability.forEach((b) => {
-    initialBlocks[`${b.dayOfWeek}-${b.utcHour}`] = b.status;
-  });
+  user.availability.forEach(
+    (b: { dayOfWeek: number; utcHour: number; status: string }) => {
+      initialBlocks[`${b.dayOfWeek}-${b.utcHour}`] = b.status;
+    },
+  );
 
   return (
     <main className="min-h-screen bg-slate-950 p-8 flex flex-col gap-8 max-w-6xl mx-auto">
