@@ -16,14 +16,11 @@ function createPrismaClient(): PrismaClient {
   const pool = new Pool({
     connectionString,
     ssl: { rejectUnauthorized: false },
-    max: 1, // Keep max connections to 1 per serverless function
+    max: 1,
     connectionTimeoutMillis: 5000,
   });
 
-  // Pass prepareStatements: false for Supabase transaction poolers (port 6543)
-  const adapter = new PrismaPg(pool, {
-    prune: true,
-  });
+  const adapter = new PrismaPg(pool);
 
   return new PrismaClient({ adapter });
 }
