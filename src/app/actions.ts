@@ -1,4 +1,7 @@
+"use server";
+
 import { db } from "@/lib/db";
+import { Status } from "@prisma/client";
 
 export async function getOrCreateUser(
   username: string,
@@ -22,4 +25,30 @@ export async function getOrCreateUser(
   }
 
   return user;
+}
+
+export async function updateAvailabilityBlock(
+  userId: string,
+  dayOfWeek: number,
+  utcHour: number,
+  status: Status,
+) {
+  return await db.availabilityBlock.upsert({
+    where: {
+      userId_dayOfWeek_utcHour: {
+        userId,
+        dayOfWeek,
+        utcHour,
+      },
+    },
+    update: {
+      status,
+    },
+    create: {
+      userId,
+      dayOfWeek,
+      utcHour,
+      status,
+    },
+  });
 }
