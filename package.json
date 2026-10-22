@@ -10,21 +10,24 @@
     "postinstall": "prisma skills sync || exit 0"
   },
   "dependencies": {
-    "@prisma/client": "^7.10.1",
+    "@prisma/adapter-pg": "^7.10.1",
     "luxon": "^3.7.2",
     "next": "16.4.2",
+    "pg": "^8.23.1",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },
   "devDependencies": {
+    "@prisma/client": "^7.10.1",
     "@tailwindcss/turbopack": "^4",
     "@types/luxon": "^3.7.6",
     "@types/node": "^20",
+    "@types/pg": "^8.23.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.2",
-    "prisma": "^8.0.0-rc.25",
+    "prisma": "^7.10.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
