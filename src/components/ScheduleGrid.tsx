@@ -34,7 +34,7 @@ export default function ScheduleGrid({
       blocks[key] === selectedStatus ? "OFFLINE" : selectedStatus;
 
     setBlocks((prev) => ({ ...prev, [key]: nextStatus }));
-    await updateAvailabilityBlock(userId, dayOfWeek, utcHour, newStatus);
+    await updateAvailabilityBlock(userId, day, hour, nextStatus);
   };
 
   return (
